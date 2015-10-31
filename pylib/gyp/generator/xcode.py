@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+from __future__ import print_function
+
 import filecmp
 import gyp.common
 import gyp.xcodeproj_file
@@ -577,7 +579,7 @@ def PerformBuild(data, configurations, params):
   for config in configurations:
     arguments = ['xcodebuild', '-project', xcodeproj_path]
     arguments += ['-configuration', config]
-    print "Building [%s]: %s" % (config, arguments)
+    print("Building [%s]: %s" % (config, arguments))
     subprocess.check_call(arguments)
 
 

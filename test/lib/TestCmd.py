@@ -214,6 +214,8 @@ version.
 # AND THERE IS NO OBLIGATION WHATSOEVER TO PROVIDE MAINTENANCE,
 # SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
+from __future__ import print_function
+
 __author__ = "Steven Knight <knight at baldmt dot com>"
 __revision__ = "TestCmd.py 0.37.D001 2010/01/11 16:55:50 knight"
 __version__ = "0.37"
@@ -428,7 +430,7 @@ def match_re(lines = None, res = None):
             expr = re.compile(s)
         except re.error, e:
             msg = "Regular expression error in %s: %s"
-            raise re.error, msg % (repr(s), e[0])
+            raise re.error(msg % (repr(s), e[0]))
         if not expr.search(lines[i]):
             return
     return 1
@@ -445,7 +447,7 @@ def match_re_dotall(lines = None, res = None):
         expr = re.compile(s, re.DOTALL)
     except re.error, e:
         msg = "Regular expression error in %s: %s"
-        raise re.error, msg % (repr(s), e[0])
+        raise re.error(msg % (repr(s), e[0]))
     if expr.match(lines):
         return 1
 
@@ -501,7 +503,7 @@ def diff_re(a, b, fromfile='', tofile='',
             expr = re.compile(s)
         except re.error, e:
             msg = "Regular expression error in %s: %s"
-            raise re.error, msg % (repr(s), e[0])
+            raise re.error(msg % (repr(s), e[0]))
         if not expr.search(bline):
             result.append("%sc%s" % (i+1, i+1))
             result.append('< ' + repr(a[i]))
@@ -974,7 +976,7 @@ class TestCmd(object):
             condition = self.condition
         if self._preserve[condition]:
             for dir in self._dirlist:
-                print "Preserved directory", dir
+                print("Preserved directory", dir)
         else:
             list = self._dirlist[:]
             list.reverse()
@@ -1021,17 +1023,17 @@ class TestCmd(object):
         difflib
     except NameError:
         def diff(self, a, b, name, *args, **kw):
-            print self.banner('Expected %s' % name)
-            print a
-            print self.banner('Actual %s' % name)
-            print b
+            print(self.banner('Expected %s' % name))
+            print(a)
+            print(self.banner('Actual %s' % name))
+            print(b)
     else:
         def diff(self, a, b, name, *args, **kw):
-            print self.banner(name)
+            print(self.banner(name))
             args = (a.splitlines(), b.splitlines()) + args
             lines = apply(self.diff_function, args, kw)
             for l in lines:
-                print l
+                print(l)
 
     def fail_test(self, condition = 1, function = None, skip = 0):
         """Cause the test to fail.
@@ -1119,7 +1121,7 @@ class TestCmd(object):
         """
         file = self.canonicalize(file)
         if mode[0] != 'r':
-            raise ValueError, "mode must begin with 'r'"
+            raise ValueError("mode must begin with 'r'")
         with open(file, mode) as f:
             result = f.read()
         return result
@@ -1582,7 +1584,7 @@ class TestCmd(object):
         """
         file = self.canonicalize(file)
         if mode[0] != 'w':
-            raise ValueError, "mode must begin with 'w'"
+            raise ValueError("mode must begin with 'w'")
         with open(file, mode) as f:
             f.write(content)
 

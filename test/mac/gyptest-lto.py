@@ -8,6 +8,8 @@
 Verifies that LTO flags work.
 """
 
+from __future__ import print_function
+
 import TestGyp
 
 import os
@@ -44,7 +46,7 @@ if sys.platform == 'darwin':
     elif ': LLVM bit-code ' in o:
       objtype = 'llvm'
     if objtype != t_expected:
-      print 'Expected %s, got %s' % (t_expected, objtype)
+      print('Expected %s, got %s' % (t_expected, objtype))
       test.fail_test()
 
   ObjType(ObjPath('cfile', 'lto'), 'llvm')

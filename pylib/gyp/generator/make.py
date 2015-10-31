@@ -21,6 +21,8 @@
 # toplevel Makefile.  It may make sense to generate some .mk files on
 # the side to keep the the files readable.
 
+from __future__ import print_function
+
 import os
 import re
 import sys
@@ -1353,8 +1355,8 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
     elif self.type == 'none':
       target = '%s.stamp' % target
     elif self.type != 'executable':
-      print ("ERROR: What output file should be generated?",
-             "type", self.type, "target", target)
+      print(("ERROR: What output file should be generated?",
+             "type", self.type, "target", target))
 
     target_prefix = spec.get('product_prefix', target_prefix)
     target = spec.get('product_name', target)
@@ -1610,7 +1612,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       self.WriteDoCmd([self.output_binary], deps, 'touch', part_of_all,
                       postbuilds=postbuilds)
     else:
-      print "WARNING: no output for", self.type, target
+      print("WARNING: no output for", self.type, target)
 
     # Add an alias for each target (if there are any outputs).
     # Installable target aliases are created below.
@@ -1962,7 +1964,7 @@ def PerformBuild(data, configurations, params):
     if options.toplevel_dir and options.toplevel_dir != '.':
       arguments += '-C', options.toplevel_dir
     arguments.append('BUILDTYPE=' + config)
-    print 'Building [%s]: %s' % (config, arguments)
+    print('Building [%s]: %s' % (config, arguments))
     subprocess.check_call(arguments)
 
 

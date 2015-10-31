@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+from __future__ import print_function
+
 import ast
 import gyp.common
 import gyp.simple_copy
@@ -502,8 +504,8 @@ def CallLoadTargetBuildFile(global_flags,
     sys.stderr.write("gyp: %s\n" % e)
     return None
   except Exception, e:
-    print >>sys.stderr, 'Exception:', e
-    print >>sys.stderr, traceback.format_exc()
+    print('Exception:', e, file=sys.stderr)
+    print(traceback.format_exc(), file=sys.stderr)
     return None
 
 

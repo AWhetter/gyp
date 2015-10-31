@@ -6,6 +6,8 @@
 TestGyp.py:  a testing framework for GYP integration tests.
 """
 
+from __future__ import print_function
+
 import errno
 import collections
 from contextlib import contextmanager
@@ -283,13 +285,13 @@ class TestGypBase(TestCommon.TestCommon):
     that expect exact output from the command (make) can
     just set stdout= when they call the run_build() method.
     """
-    print "Build is not up-to-date:"
-    print self.banner('STDOUT ')
-    print self.stdout()
+    print("Build is not up-to-date:")
+    print(self.banner('STDOUT '))
+    print(self.stdout())
     stderr = self.stderr()
     if stderr:
-      print self.banner('STDERR ')
-      print stderr
+      print(self.banner('STDERR '))
+      print(stderr)
 
   def run_gyp(self, gyp_file, *args, **kw):
     """
@@ -557,7 +559,7 @@ class TestGypMake(TestGypBase):
     # Makefile.gyp_filename), so use that if there is no Makefile.
     chdir = kw.get('chdir', '')
     if not os.path.exists(os.path.join(chdir, 'Makefile')):
-      print "NO Makefile in " + os.path.join(chdir, 'Makefile')
+      print("NO Makefile in " + os.path.join(chdir, 'Makefile'))
       arguments.insert(0, '-f')
       arguments.insert(1, os.path.splitext(gyp_file)[0] + '.Makefile')
     kw['arguments'] = arguments
@@ -664,7 +666,7 @@ def FindMSBuildInstallation(msvs_version = 'auto'):
 
   msbuild_basekey = r'HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions'
   if not registry.KeyExists(msbuild_basekey):
-    print 'Error: could not find MSBuild base registry entry'
+    print('Error: could not find MSBuild base registry entry')
     return None
 
   msbuild_version = None
@@ -683,13 +685,13 @@ def FindMSBuildInstallation(msvs_version = 'auto'):
         msbuild_version = msbuild_test_version
         break
   if not msbuild_version:
-    print 'Error: could not find MSBuild registry entry'
+    print('Error: could not find MSBuild registry entry')
     return None
 
   msbuild_path = registry.GetValue(msbuild_basekey + '\\' + msbuild_version,
                                    'MSBuildToolsPath')
   if not msbuild_path:
-    print 'Error: could not get MSBuild registry entry value'
+    print('Error: could not get MSBuild registry entry value')
     return None
 
   return os.path.join(msbuild_path, 'MSBuild.exe')
@@ -743,7 +745,7 @@ def FindVisualStudioInstallation():
         uses_msbuild = msvs_version >= '2010'
         msbuild_path = FindMSBuildInstallation(msvs_version)
         return build_tool, uses_msbuild, msbuild_path
-  print 'Error: could not find devenv'
+  print('Error: could not find devenv')
   sys.exit(1)
 
 class TestGypOnMSToolchain(TestGypBase):
@@ -1191,4 +1193,4 @@ def TestGyp(*args, **kw):
   for format_class in format_class_list:
     if format == format_class.format:
       return format_class(*args, **kw)
-  raise Exception, "unknown format %r" % format
+  raise Exception("unknown format %r" % format)
