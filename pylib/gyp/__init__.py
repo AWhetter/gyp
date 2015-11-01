@@ -209,7 +209,7 @@ def RegenerateFlags(options):
   # We always want to ignore the environment when regenerating, to avoid
   # duplicate or changed flags in the environment at the time of regeneration.
   flags = ['--ignore-environment']
-  for name, metadata in options._regeneration_metadata.iteritems():
+  for name, metadata in options._regeneration_metadata.items():
     opt = metadata['opt']
     value = getattr(options, name)
     value_predicate = metadata['type'] == 'path' and FixPath or Noop
@@ -493,7 +493,7 @@ def gyp_main(args):
   if options.generator_flags:
     gen_flags += options.generator_flags
   generator_flags = NameValueListToDict(gen_flags)
-  if DEBUG_GENERAL in gyp.debug.keys():
+  if DEBUG_GENERAL in gyp.debug:
     DebugOutput(DEBUG_GENERAL, "generator_flags: %s", generator_flags)
 
   # Generate all requested formats (use a set in case we got one format request
@@ -526,7 +526,7 @@ def gyp_main(args):
     generator.GenerateOutput(flat_list, targets, data, params)
 
     if options.configs:
-      valid_configs = targets[flat_list[0]]['configurations'].keys()
+      valid_configs = targets[flat_list[0]]['configurations']
       for conf in options.configs:
         if conf not in valid_configs:
           raise GypError('Invalid config specified via --build: %s' % conf)
