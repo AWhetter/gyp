@@ -16,6 +16,11 @@ import sys
 import traceback
 from gyp.common import GypError
 
+try:
+  basestring = basestring
+except NameError:
+  basestring = str
+
 # Default debug modes for GYP
 debug = {}
 
@@ -23,7 +28,6 @@ debug = {}
 DEBUG_GENERAL = 'general'
 DEBUG_VARIABLES = 'variables'
 DEBUG_INCLUDES = 'includes'
-
 
 def DebugOutput(mode, message, *args):
   if 'all' in gyp.debug or mode in gyp.debug:
