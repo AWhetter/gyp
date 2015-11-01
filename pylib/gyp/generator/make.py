@@ -797,7 +797,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
           gyp.xcode_emulation.MacPrefixHeader(
               self.xcode_settings, lambda p: Sourceify(self.Absolutify(p)),
               self.Pchify))
-      sources = filter(Compilable, all_sources)
+      sources = [x for x in all_sources if Compilable(x)]
       if sources:
         self.WriteLn(SHARED_HEADER_SUFFIX_RULES_COMMENT1)
         extensions = set([os.path.splitext(s)[1] for s in sources])
@@ -926,7 +926,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                    '%s%s'
                    % (name, cd_action, command))
       self.WriteLn()
-      outputs = map(self.Absolutify, outputs)
+      outputs = [self.Absolutify(o) for o in outputs]
       # The makefile rules are all relative to the top dir, but the gyp actions
       # are defined relative to their containing dir.  This replaces the obj
       # variable for the action rule with an absolute version so that the output
@@ -1016,7 +1016,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         outputs = [gyp.xcode_emulation.ExpandEnvVars(o, env) for o in outputs]
         inputs = [gyp.xcode_emulation.ExpandEnvVars(i, env) for i in inputs]
 
-        outputs = map(self.Absolutify, outputs)
+        outputs = [self.Absolutify(o) for o in outputs]
         all_outputs += outputs
         # Only write the 'obj' and 'builddir' rules for the "primary" output
         # (:1); it's superfluous for the "extra outputs", and this avoids
@@ -1214,11 +1214,11 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         self.WriteList(cflags_objcc, 'CFLAGS_OBJCC_%s' % configname)
       includes = config.get('include_dirs')
       if includes:
-        includes = map(Sourceify, map(self.Absolutify, includes))
+        includes = [Sourceify(self.Absolutify(include)) for include in includes]
       self.WriteList(includes, 'INCS_%s' % configname, prefix='-I')
 
     compilable = filter(Compilable, sources)
-    objs = map(self.Objectify, map(self.Absolutify, map(Target, compilable)))
+    objs = [self.Objectify(self.Absolutify(Target(x))) for x in compilable]
     self.WriteList(objs, 'OBJS')
 
     for obj in objs:
@@ -1290,7 +1290,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
 
     # If there are any object files in our input file list, link them into our
     # output.
-    extra_link_deps += filter(Linkable, sources)
+    extra_link_deps += [source for source in sources if Linkable(source)]
 
     self.WriteLn()
 
@@ -1719,7 +1719,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
            output is just a name to run the rule
     command: (optional) command name to generate unambiguous labels
     """
-    outputs = map(QuoteSpaces, outputs)
+    outputs = [QuoteSpaces(o) for o in outputs]
     inputs = map(QuoteSpaces, inputs)
 
     if comment:

@@ -244,7 +244,7 @@ class TestCommon(TestCmd):
         """
         files = map(lambda x: is_List(x) and apply(os.path.join, x) or x, files)
         existing, missing = separate_files(files)
-        unwritable = filter(lambda x, iw=is_writable: not iw(x), existing)
+        unwritable = [x for x in existing if not is_writable(x)]
         if missing:
             print("Missing files: `%s'" % string.join(missing, "', `"))
         if unwritable:
@@ -329,7 +329,7 @@ class TestCommon(TestCmd):
         if any of the files does not exist.
         """
         files = map(lambda x: is_List(x) and apply(os.path.join, x) or x, files)
-        missing = filter(lambda x: not os.path.exists(x), files)
+        missing = [f for f in files if not os.path.exists(f)]
         if missing:
             print("Missing files: `%s'" % string.join(missing, "', `"))
             self.fail_test(missing)
@@ -401,7 +401,7 @@ class TestCommon(TestCmd):
         Exits FAILED if any of the files exists.
         """
         files = map(lambda x: is_List(x) and apply(os.path.join, x) or x, files)
-        existing = filter(os.path.exists, files)
+        existing = [f for f in files if os.path.exists(f)]
         if existing:
             print("Unexpected files exist: `%s'" % string.join(existing, "', `"))
             self.fail_test(existing)
@@ -415,7 +415,7 @@ class TestCommon(TestCmd):
         """
         files = map(lambda x: is_List(x) and apply(os.path.join, x) or x, files)
         existing, missing = separate_files(files)
-        writable = filter(is_writable, existing)
+        writable = [x for x in existing if is_writable(x)]
         if missing:
             print("Missing files: `%s'" % string.join(missing, "', `"))
         if writable:

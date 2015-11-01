@@ -290,11 +290,10 @@ _chain_to_exitfunc = None
 
 def _clean():
     global _Cleanup
-    cleanlist = filter(None, _Cleanup)
+    for test in reversed(_Cleanup):
+        if test:
+            test.cleanup()
     del _Cleanup[:]
-    cleanlist.reverse()
-    for test in cleanlist:
-        test.cleanup()
     if _chain_to_exitfunc:
         _chain_to_exitfunc()
 

@@ -5,6 +5,10 @@
 import re
 import os
 
+try:
+  reduce
+except NameError:
+  from functools import reduce
 
 def XmlToString(content, encoding='utf-8', pretty=False):
   """ Writes the XML content to disk, touching the file only if it has changed.
