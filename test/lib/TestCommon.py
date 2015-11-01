@@ -101,7 +101,10 @@ import stat
 import string
 import sys
 import types
-import UserList
+try:
+    from UserList import UserList
+except ImportError:
+    from collections import UserList
 
 from TestCmd import *
 from TestCmd import __all__
@@ -187,7 +190,7 @@ else:
 
 def is_List(e):
     return type(e) is types.ListType \
-        or isinstance(e, UserList.UserList)
+        or isinstance(e, UserList)
 
 def is_writable(f):
     mode = os.stat(f)[stat.ST_MODE]

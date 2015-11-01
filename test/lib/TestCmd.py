@@ -232,7 +232,10 @@ import tempfile
 import time
 import traceback
 import types
-import UserList
+try:
+    from UserList import UserList
+except ImportError:
+    from collections import UserList
 
 __all__ = [
     'diff_re',
@@ -253,13 +256,16 @@ except ImportError:
 
 def is_List(e):
     return type(e) is types.ListType \
-        or isinstance(e, UserList.UserList)
+        or isinstance(e, UserList)
 
 try:
     from UserString import UserString
 except ImportError:
-    class UserString:
-        pass
+    try:
+        from collections import UserString
+    except ImportError:
+        class UserString:
+            pass
 
 if hasattr(types, 'UnicodeType'):
     def is_String(e):
