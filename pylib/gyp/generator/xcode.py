@@ -1025,15 +1025,14 @@ def GenerateOutput(target_list, target_dicts, data, params):
         # concrete output for each rule source as a prerequisite of the "all"
         # target.
         makefile.write('all: \\\n')
-        for concrete_output_index in \
-            xrange(0, len(concrete_outputs_by_rule_source)):
+        for concrete_output_index, concrete_output_by_rule_source in \
+            enumerate(concrete_outputs_by_rule_source):
           # Only list the first (index [0]) concrete output of each input
           # in the "all" target.  Otherwise, a parallel make (-j > 1) would
           # attempt to process each input multiple times simultaneously.
           # Otherwise, "all" could just contain the entire list of
           # concrete_outputs_all.
-          concrete_output = \
-              concrete_outputs_by_rule_source[concrete_output_index][0]
+          concrete_output = concrete_output_by_rule_source[0]
           if concrete_output_index == len(concrete_outputs_by_rule_source) - 1:
             eol = ''
           else:
@@ -1049,8 +1048,8 @@ def GenerateOutput(target_list, target_dicts, data, params):
           # rule source.  Collect the names of the directories that are
           # required.
           concrete_output_dirs = []
-          for concrete_output_index in xrange(0, len(concrete_outputs)):
-            concrete_output = concrete_outputs[concrete_output_index]
+          for concrete_output_index, concrete_output in \
+              enumerate(concrete_outputs):
             if concrete_output_index == 0:
               bol = ''
             else:
@@ -1068,8 +1067,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
           # the set of additional rule inputs, if any.
           prerequisites = [rule_source]
           prerequisites.extend(rule.get('inputs', []))
-          for prerequisite_index in xrange(0, len(prerequisites)):
-            prerequisite = prerequisites[prerequisite_index]
+          for prerequisite_index, prerequisite in enumerate(prerequisites):
             if prerequisite_index == len(prerequisites) - 1:
               eol = ''
             else:

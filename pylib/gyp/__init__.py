@@ -438,12 +438,11 @@ def gyp_main(args):
     for build_file in build_files:
       build_file_dir = os.path.abspath(os.path.dirname(build_file))
       build_file_dir_components = build_file_dir.split(os.path.sep)
-      components_len = len(build_file_dir_components)
-      for index in xrange(components_len - 1, -1, -1):
-        if build_file_dir_components[index] == 'src':
+      for component in reversed(build_file_dir_components):
+        if component == 'src':
           options.depth = os.path.sep.join(build_file_dir_components)
           break
-        del build_file_dir_components[index]
+        del build_file_dir_components[-1]
 
       # If the inner loop found something, break without advancing to another
       # build file.
