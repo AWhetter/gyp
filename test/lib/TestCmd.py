@@ -589,7 +589,7 @@ except ImportError:
         import popen2
         popen2.Popen3
     except AttributeError:
-        class Popen3:
+        class Popen3(object):
             universal_newlines = 1
             def __init__(self, command, **kw):
                 if sys.platform == 'win32' and command[0] == '"':
@@ -827,14 +827,6 @@ def send_all(p, data):
         if sent is None:
             raise Exception(disconnect_message)
         data = buffer(data, sent)
-
-
-
-try:
-    object
-except NameError:
-    class object:
-        pass
 
 
 
