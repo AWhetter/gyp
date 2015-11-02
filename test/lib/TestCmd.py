@@ -651,14 +651,14 @@ except ImportError:
             universal_newlines = 1
             def __init__(self, command, **kw):
                 if kw.get('stderr') == 'STDOUT':
-                    apply(popen2.Popen4.__init__, (self, command, 1))
+                    popen2.Popen4.__init__(self, command, 1)
                 else:
-                    apply(popen2.Popen3.__init__, (self, command, 1))
+                    popen2.Popen3.__init__(self, command, 1)
                 self.stdin = self.tochild
                 self.stdout = self.fromchild
                 self.stderr = self.childerr
             def wait(self, *args, **kw):
-                resultcode = apply(popen2.Popen3.wait, (self,)+args, kw)
+                resultcode = popen2.Popen3.wait(self, *args, **kw)
                 if os.WIFEXITED(resultcode):
                     return os.WEXITSTATUS(resultcode)
                 elif os.WIFSIGNALED(resultcode):
@@ -938,7 +938,7 @@ class TestCmd(object):
 
     def canonicalize(self, path):
         if is_List(path):
-            path = apply(os.path.join, tuple(path))
+            path = os.path.join(*path)
         if not os.path.isabs(path):
             path = os.path.join(self.workdir, path)
         return path
@@ -1027,7 +1027,7 @@ class TestCmd(object):
         def diff(self, a, b, name, *args, **kw):
             print(self.banner(name))
             args = (a.splitlines(), b.splitlines()) + args
-            lines = apply(self.diff_function, args, kw)
+            lines = self.diff_function(*args, **kw)
             for l in lines:
                 print(l)
 
@@ -1310,7 +1310,7 @@ class TestCmd(object):
             if sub is None:
                 continue
             if is_List(sub):
-                sub = apply(os.path.join, tuple(sub))
+                sub = os.path.join(*sub)
             new = os.path.join(self.workdir, sub)
             try:
                 os.mkdir(new)
@@ -1400,7 +1400,7 @@ class TestCmd(object):
         """Find an executable file.
         """
         if is_List(file):
-            file = apply(os.path.join, tuple(file))
+            file = os.path.join(*file)
         if not os.path.isabs(file):
             file = where_is(file, path, pathext)
         return file
@@ -1422,7 +1422,7 @@ class TestCmd(object):
         the temporary working directory name with the specified
         arguments using the os.path.join() method.
         """
-        return apply(os.path.join, (self.workdir,) + tuple(args))
+        return os.path.join(self.workdir, *args)
 
     def readable(self, top, read=1):
         """Make the specified directory tree readable (read == 1)
