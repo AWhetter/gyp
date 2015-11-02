@@ -452,7 +452,7 @@ class XCObject(object):
       # is 160 bits.  Instead of throwing out 64 bits of the digest, xor them
       # into the portion that gets used.
       assert hash.digest_size % 4 == 0
-      digest_int_count = hash.digest_size / 4
+      digest_int_count = hash.digest_size // 4
       digest_ints = struct.unpack('>' + 'I' * digest_int_count, hash.digest())
       id_ints = [0, 0, 0]
       for index in range(0, digest_int_count):
