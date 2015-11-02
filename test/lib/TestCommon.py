@@ -100,7 +100,6 @@ import os.path
 import stat
 import string
 import sys
-import types
 try:
     from UserList import UserList
 except ImportError:
@@ -189,7 +188,7 @@ else:
     module_suffix = '.so'
 
 def is_List(e):
-    return type(e) is types.ListType \
+    return type(e) is list \
         or isinstance(e, UserList)
 
 def is_writable(f):

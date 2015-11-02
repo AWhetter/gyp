@@ -231,7 +231,6 @@ import sys
 import tempfile
 import time
 import traceback
-import types
 try:
     from UserList import UserList
 except ImportError:
@@ -255,7 +254,7 @@ except ImportError:
     __all__.append('simple_diff')
 
 def is_List(e):
-    return type(e) is types.ListType \
+    return type(e) is list \
         or isinstance(e, UserList)
 
 try:
@@ -267,14 +266,14 @@ except ImportError:
         class UserString:
             pass
 
-if hasattr(types, 'UnicodeType'):
-    def is_String(e):
-        return type(e) is types.StringType \
-            or type(e) is types.UnicodeType \
-            or isinstance(e, UserString)
-else:
-    def is_String(e):
-        return type(e) is types.StringType or isinstance(e, UserString)
+try:
+    basestring = basestring
+except NameError:
+    basestring = str
+
+def is_String(e):
+    return isinstance(e, basestring) \
+        or isinstance(e, UserString)
 
 tempfile.template = 'testcmd.'
 if os.name in ('posix', 'nt'):
