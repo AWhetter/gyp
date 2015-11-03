@@ -886,7 +886,7 @@ class TestGypMSVS(TestGypOnMSToolchain):
     kw['arguments'] = arguments
     return self.run(program=self.build_tool, **kw)
   def up_to_date(self, gyp_file, target=None, **kw):
-    """
+    r"""
     Verifies that a build of the specified Visual Studio target is up to date.
 
     Beware that VS2010 will behave strangely if you build under
