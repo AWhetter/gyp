@@ -225,6 +225,7 @@ def main(argv=None):
       'openbsd5': ['make'],
       'cygwin':   ['msvs'],
       'win32':    ['msvs', 'ninja'],
+      'linux':    ['make', 'ninja'],
       'linux2':   ['make', 'ninja'],
       'linux3':   ['make', 'ninja'],
       'darwin':   ['make', 'ninja', 'xcode', 'xcode-ninja'],
