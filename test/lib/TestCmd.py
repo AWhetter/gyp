@@ -226,7 +226,6 @@ import os.path
 import re
 import shutil
 import stat
-import string
 import sys
 import tempfile
 import time
@@ -409,9 +408,9 @@ def match_exact(lines = None, matches = None):
     """
     """
     if not is_List(lines):
-        lines = string.split(lines, "\n")
+        lines = lines.split("\n")
     if not is_List(matches):
-        matches = string.split(matches, "\n")
+        matches = matches.split("\n")
     if len(lines) != len(matches):
         return
     for i in range(len(lines)):
@@ -423,9 +422,9 @@ def match_re(lines = None, res = None):
     """
     """
     if not is_List(lines):
-        lines = string.split(lines, "\n")
+        lines = lines.split("\n")
     if not is_List(res):
-        res = string.split(res, "\n")
+        res = res.split("\n")
     if len(lines) != len(res):
         return
     for i in range(len(lines)):
@@ -443,9 +442,9 @@ def match_re_dotall(lines = None, res = None):
     """
     """
     if not type(lines) is type(""):
-        lines = string.join(lines, "\n")
+        lines = "\n".join(lines)
     if not type(res) is type(""):
-        res = string.join(res, "\n")
+        res = "\n".join(res)
     s = "^" + res + "$"
     try:
         expr = re.compile(s, re.DOTALL)
@@ -532,13 +531,13 @@ if sys.platform == 'win32':
         if path is None:
             path = os.environ['PATH']
         if is_String(path):
-            path = string.split(path, os.pathsep)
+            path = path.split(os.pathsep)
         if pathext is None:
             pathext = os.environ['PATHEXT']
         if is_String(pathext):
-            pathext = string.split(pathext, os.pathsep)
+            pathext = pathext.split(os.pathsep)
         for ext in pathext:
-            if string.lower(ext) == string.lower(file[-len(ext):]):
+            if ext.lower() == file[-len(ext):].lower():
                 pathext = ['']
                 break
         for dir in path:
@@ -555,7 +554,7 @@ else:
         if path is None:
             path = os.environ['PATH']
         if is_String(path):
-            path = string.split(path, os.pathsep)
+            path = path.split(os.pathsep)
         for dir in path:
             f = os.path.join(dir, file)
             if os.path.isfile(f):
@@ -917,9 +916,9 @@ class TestCmd(object):
             slash = '\\'
             special = '"$'
 
-            arg = string.replace(arg, slash, slash+slash)
+            arg = arg.replace(slash, slash+slash)
             for c in special:
-                arg = string.replace(arg, c, slash+c)
+                arg = arg.replace(c, slash+c)
 
             if re_space.search(arg):
                 arg = '"' + arg + '"'
@@ -1005,7 +1004,7 @@ class TestCmd(object):
             cmd = list(interpreter) + cmd
         if arguments:
             if type(arguments) == type(''):
-                arguments = string.split(arguments)
+                arguments = arguments.split()
             cmd.extend(arguments)
         return cmd
 
@@ -1144,7 +1143,7 @@ class TestCmd(object):
         prepended unless it is enclosed in a [list].
         """
         cmd = self.command_args(program, interpreter, arguments)
-        cmd_string = string.join(map(self.escape, cmd), ' ')
+        cmd_string = ' '.join(map(self.escape, cmd))
         if self.verbose:
             sys.stderr.write(cmd_string + "\n")
         if universal_newlines is None:
@@ -1357,7 +1356,7 @@ class TestCmd(object):
         # letters is pretty much random on win32:
         drive,rest = os.path.splitdrive(path)
         if drive:
-            path = string.upper(drive) + rest
+            path = drive.upper() + rest
 
         #
         self._dirlist.append(path)

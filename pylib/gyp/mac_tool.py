@@ -18,7 +18,6 @@ import os
 import plistlib
 import re
 import shutil
-import string
 import struct
 import subprocess
 import sys
@@ -183,7 +182,7 @@ class MacTool(object):
         continue
       evar = '${%s}' % key
       evalue = os.environ[key]
-      lines = string.replace(lines, evar, evalue)
+      lines = lines.replace(evar, evalue)
 
       # Xcode supports various suffices on environment variables, which are
       # all undocumented. :rfc1034identifier is used in the standard project
@@ -193,11 +192,11 @@ class MacTool(object):
       # in a URL either -- oops, hence :rfc1034identifier was born.
       evar = '${%s:identifier}' % key
       evalue = IDENT_RE.sub('_', os.environ[key])
-      lines = string.replace(lines, evar, evalue)
+      lines = lines.replace(evar, evalue)
 
       evar = '${%s:rfc1034identifier}' % key
       evalue = IDENT_RE.sub('-', os.environ[key])
-      lines = string.replace(lines, evar, evalue)
+      lines = lines.replace(evar, evalue)
 
     # Remove any keys with values that haven't been replaced.
     lines = lines.split('\n')
