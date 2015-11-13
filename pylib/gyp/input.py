@@ -894,7 +894,8 @@ def ExpandVariables(input, phase, variables, build_file):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE,
                                  stdin=subprocess.PIPE,
-                                 cwd=build_file_dir)
+                                 cwd=build_file_dir,
+                                 universal_newlines=True)
           except Exception as e:
             raise GypError("%s while executing command '%s' in %s" %
                            (e, contents, build_file))

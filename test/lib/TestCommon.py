@@ -249,7 +249,7 @@ class TestCommon(TestCmd):
             print("Unwritable files: `%s'" % "', `".join(unwritable))
         self.fail_test(missing + unwritable)
 
-    def must_contain(self, file, required, mode = 'rb'):
+    def must_contain(self, file, required, mode = 'r'):
         """Ensures that the specified file contains the required text.
         """
         file_contents = self.read(file, mode)
@@ -332,7 +332,7 @@ class TestCommon(TestCmd):
             print("Missing files: `%s'" % "', `".join(missing))
             self.fail_test(missing)
 
-    def must_match(self, file, expect, mode = 'rb'):
+    def must_match(self, file, expect, mode = 'r'):
         """Matches the contents of the specified file (first argument)
         against the expected contents (second argument).  The expected
         contents are a list of lines or a string which will be split
@@ -348,7 +348,7 @@ class TestCommon(TestCmd):
             self.diff(expect, file_contents, 'contents ')
             raise
 
-    def must_not_contain(self, file, banned, mode = 'rb'):
+    def must_not_contain(self, file, banned, mode = 'r'):
         """Ensures that the specified file doesn't contain the banned text.
         """
         file_contents = self.read(file, mode)

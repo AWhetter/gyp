@@ -1050,7 +1050,7 @@ def GenerateEnvironmentFiles(toplevel_build_dir, generator_flags,
       env['INCLUDE'] = ';'.join(system_includes)
 
     env_block = _FormatAsEnvironmentBlock(env)
-    f = open_out(os.path.join(toplevel_build_dir, 'environment.' + arch), 'wb')
+    f = open_out(os.path.join(toplevel_build_dir, 'environment.' + arch), 'w')
     f.write(env_block)
     f.close()
 

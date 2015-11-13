@@ -19,7 +19,8 @@ if sys.platform == 'darwin':
   import subprocess
   job = subprocess.Popen(['xcodebuild', '-version'],
                          stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
+                         stderr=subprocess.STDOUT,
+                         universal_newlines=True)
   out, err = job.communicate()
   if job.returncode != 0:
     raise Exception('Error %d running xcodebuild' % job.returncode)

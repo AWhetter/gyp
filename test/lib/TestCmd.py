@@ -1104,14 +1104,14 @@ class TestCmd(object):
             program = os.path.join(self._cwd, program)
         self.program = program
 
-    def read(self, file, mode = 'rb'):
+    def read(self, file, mode = 'r'):
         """Reads and returns the contents of the specified file name.
         The file name may be a list, in which case the elements are
         concatenated with the os.path.join() method.  The file is
         assumed to be under the temporary working directory unless it
         is an absolute path name.  The I/O mode for the file may
         be specified; it must begin with an 'r'.  The default is
-        'rb' (binary read).
+        'r' (string read).
         """
         file = self.canonicalize(file)
         if mode[0] != 'r':
@@ -1567,14 +1567,14 @@ class TestCmd(object):
 
             do_chmod(top)
 
-    def write(self, file, content, mode = 'wb'):
+    def write(self, file, content, mode = 'w'):
         """Writes the specified content text (second argument) to the
         specified file name (first argument).  The file name may be
         a list, in which case the elements are concatenated with the
         os.path.join() method.  The file is created under the temporary
         working directory.  Any subdirectories in the path must already
         exist.  The I/O mode for the file may be specified; it must
-        begin with a 'w'.  The default is 'wb' (binary write).
+        begin with a 'w'.  The default is 'w' (string write).
         """
         file = self.canonicalize(file)
         if mode[0] != 'w':

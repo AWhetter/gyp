@@ -446,7 +446,7 @@ sys.exit(subprocess.call(sys.argv[1:]))" """
                          dir=self.path)
 
     try:
-      output_file = os.fdopen(output_fd, 'wb')
+      output_file = os.fdopen(output_fd, 'w')
 
       self.project_file.Print(output_file)
       output_file.close()
@@ -1018,7 +1018,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
                                      makefile_name)
         # TODO(mark): try/close?  Write to a temporary file and swap it only
         # if it's got changes?
-        makefile = open(makefile_path, 'wb')
+        makefile = open(makefile_path, 'w')
 
         # make will build the first target in the makefile by default.  By
         # convention, it's called "all".  List all (or at least one)

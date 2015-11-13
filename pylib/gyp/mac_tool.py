@@ -152,11 +152,11 @@ class MacTool(object):
       fp.close()
       return None
     fp.close()
-    if header.startswith("\xFE\xFF"):
+    if header.startswith(b"\xFE\xFF"):
       return "UTF-16"
-    elif header.startswith("\xFF\xFE"):
+    elif header.startswith(b"\xFF\xFE"):
       return "UTF-16"
-    elif header.startswith("\xEF\xBB\xBF"):
+    elif header.startswith(b"\xEF\xBB\xBF"):
       return "UTF-8"
     else:
       return None
